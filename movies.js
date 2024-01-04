@@ -109,21 +109,6 @@ function setCellContent(
 }
 const storedMovies = JSON.parse(localStorage.getItem("movies")) || [];
 
-function renderMovies() {
-  storedMovies.forEach((movie) => {
-    const movieRow = createMovieCellElementsAndAttachEvents(
-      movie.title,
-      movie.img,
-      movie.rating
-    );
-    movieTable.appendChild(movieRow);
-  });
-}
-
-window.onload = function () {
-  renderMovies();
-};
-
 function hideShowElement(el) {
   if (el.style.display === "none") {
     el.style.display = "block";
@@ -145,8 +130,21 @@ function addImageCellEvents(imgCell) {
     imgCell.childNodes[0].width = 70;
   });
 }
-
+//================================= Add event to delete row
 function addDeleteEvent(button) {
+  button.addEventListener("click", function (event) {
+    let row = event.target.closest("tr");
+
+    const indexOfMovie = storedMovies.indexOf(row);
+    storedMovies.splice(indexOfMovie, 1);
+    localStorage.setItem("movies", JSON.stringify(storedMovies));
+    if (row) {
+      row.parentNode.removeChild(row);
+    }
+  });
+}
+
+/*function addDeleteEvent(button) {
   button.addEventListener("click", function (event) {
     let row = event.target.closest("tr");
 
@@ -155,7 +153,7 @@ function addDeleteEvent(button) {
     }
   });
 }
-
+*/
 function increaseRating(ratingSpanThumbsUp) {
   ratingSpanThumbsUp.addEventListener("click", function (event) {
     let numberRating = ratingSpanThumbsUp.nextSibling.nextSibling;
@@ -184,12 +182,14 @@ movies.forEach(function (movie) {
   );
   body.appendChild(row);
 });
+
 const addMovie = (event) =>
   movieform.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    let imgsrc = movieform[0].value;
-    let title = movieform[1].value;
+    let title = movieform[0].value;
+    let imgsrc = movieform[1].value;
+    console.log(imgsrc);
     let rating = movieform[2].value;
 
     if (imgsrc == "" || title == "" || rating == "") {
@@ -218,3 +218,22 @@ const addMovie = (event) =>
       hideShowElement(document.getElementById("new-movie-form"));
     }
   });
+function renderMovies() {
+  storedMovies.forEach(function (movie) {
+    let row = document.createElement("tr");
+    createMovieCellElementsAndAttachEvents(
+      row,
+      movie.title,
+      movie.img,
+      movie.rating
+    );
+    body.appendChild(row);
+  });
+}
+
+// Load movies from local storage when the window loads
+window.onload = function () {
+  if (storedMovies.length > 0) {
+    renderMovies();
+  }
+};
