@@ -237,3 +237,22 @@ window.onload = function () {
     renderMovies();
   }
 };
+
+const images = document.querySelectorAll(".slideshow img");
+let currentIndex = 0;
+
+function showImage(index) {
+  images.forEach((img) => {
+    img.style.display = "none";
+  });
+  images[index].style.display = "block";
+  currentIndex = (currentIndex + 1) % images.length;
+}
+
+function startSlideshow() {
+  showImage(currentIndex);
+  setInterval(() => {
+    showImage(currentIndex);
+  }, 2000);
+}
+window.onload = startSlideshow;
