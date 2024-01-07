@@ -256,3 +256,27 @@ function startSlideshow() {
   }, 2000);
 }
 window.onload = startSlideshow;
+
+const contentContainer = document.querySelector(".content-container");
+const scrollLeftButton = document.querySelector(".scroll-left-button");
+const scrollRightButton = document.querySelector(".scroll-right-button");
+
+scrollLeftButton.addEventListener("click", () => {
+  contentContainer.scrollLeft -= 100;
+});
+scrollRightButton.addEventListener("click", () => {
+  contentContainer.scrollLeft += 100;
+});
+
+const slideShowTransition = document.getElementById("slideShowTransition");
+slideShowTransition.style.opacity = "0";
+let opacityValue = 0;
+
+function fadeIn() {
+  if (opacityValue < 1) {
+    opacityValue += 0.01;
+    slideShowTransition.style.opacity = opacityValue;
+    setTimeout(fadeIn, 10);
+  }
+}
+fadeIn();

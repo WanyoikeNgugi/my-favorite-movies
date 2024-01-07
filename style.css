@@ -18,6 +18,55 @@
 .slideshow img {
   display: none;
   width: 100%;
-  height: 300px;
-  transition: opacity 1s ease-in-out;
+  height: 400px;
+  transition: transform 1s ease, opacity 1s ease;
+}
+.recent {
+  display: flex;
+}
+.recent img {
+  max-width: 100%;
+  height: auto;
+}
+
+.scroll-right-button {
+  position: absolute; /* Position buttons relative to the container */
+  top: 56%; /* Center vertically */
+  width: 30px; /* Adjust width and height as needed */
+  height: 100px;
+  right: 5px;
+  font-size: 30px;
+  border: none;
+  background-color: transparent;
+  color: #000;
+  cursor: pointer;
+  border-radius: 0;
+  padding: 0px;
+  transition: background-color 0.3s ease; /* Transition for button hover */
+}
+.scroll-left-button {
+  position: absolute; /* Position buttons relative to the container */
+  top: 56%; /* Center vertically */
+  width: 30px; /* Adjust width and height as needed */
+  height: 100px;
+  left: 5px;
+  font-size: 30px;
+  border: none;
+  background-color: transparent;
+  color: #000;
+  cursor: pointer;
+  border-radius: 0;
+  padding: 0px;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect for buttons (optional) */
+.scroll-left-button:hover,
+.scroll-right-button:hover {
+  background-color: #999;
+}
+.content-container {
+  overflow-x: hidden; /* Hide content that overflows horizontally */
+  position: relative; /* Ensure relative positioning for absolute elements */
+  width: 100%; /* Set the container width */
 }
