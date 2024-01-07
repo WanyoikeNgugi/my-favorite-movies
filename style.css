@@ -27,6 +27,9 @@
 .recent img {
   max-width: 100%;
   height: auto;
+  border-radius: 5px;
+  border-left: #f2dede;
+  border-right: #f2dede;
 }
 
 .scroll-right-button {
