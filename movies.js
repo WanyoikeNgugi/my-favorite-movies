@@ -240,33 +240,38 @@ window.onload = function () {
 
 const images = document.querySelectorAll(".slideshow img");
 let currentIndex = 0;
+let opacityValue1 = 0.01;
 
 function showImage(index) {
   images.forEach((img) => {
     img.style.display = "none";
   });
   images[index].style.display = "block";
-  currentIndex = (currentIndex + 1) % images.length;
+  images[index].style.opacity = "0.01";
+
+  function imageFadeIn() {
+    if (opacityValue1 < 1) {
+      opacityValue1 += 0.01;
+      images[index].style.opacity = opacityValue1;
+      setTimeout(imageFadeIn, 10);
+    } else {
+      opacityValue1 = 0.01; // Reset opacity value for the next image
+      currentIndex = (currentIndex + 1) % images.length;
+      //showImage(currentIndex); // Show the next image
+    }
+  }
+  imageFadeIn();
 }
+
+showImage(currentIndex);
 
 function startSlideshow() {
   showImage(currentIndex);
   setInterval(() => {
     showImage(currentIndex);
-  }, 2000);
+  }, 5000);
 }
 window.onload = startSlideshow;
-
-const contentContainer = document.querySelector(".content-container");
-const scrollLeftButton = document.querySelector(".scroll-left-button");
-const scrollRightButton = document.querySelector(".scroll-right-button");
-
-scrollLeftButton.addEventListener("click", () => {
-  contentContainer.scrollLeft -= 100;
-});
-scrollRightButton.addEventListener("click", () => {
-  contentContainer.scrollLeft += 100;
-});
 
 const slideShowTransition = document.getElementById("slideShowTransition");
 slideShowTransition.style.opacity = "0";
@@ -280,3 +285,25 @@ function fadeIn() {
   }
 }
 fadeIn();
+
+const contentContainer = document.querySelector(".content-container");
+const scrollLeftButton = document.querySelector(".scroll-left-button");
+const scrollRightButton = document.querySelector(".scroll-right-button");
+
+scrollLeftButton.addEventListener("click", () => {
+  const containerWidth =
+    contentContainer.scrollWidth - contentContainer.clientWidth;
+  contentContainer.scrollTo({
+    left: 0,
+    behavior: "smooth",
+  });
+});
+
+scrollRightButton.addEventListener("click", () => {
+  const containerWidth =
+    contentContainer.scrollWidth - contentContainer.clientWidth;
+  contentContainer.scrollTo({
+    left: containerWidth,
+    behavior: "smooth",
+  });
+});
